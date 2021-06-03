@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Packs;
+use App\Models\Client;
 use Illuminate\Http\Request;
 
-class PacksController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PacksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Packs  $packs
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Packs $packs)
+    public function show(Client $client)
     {
         //
     }
@@ -52,10 +52,10 @@ class PacksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Packs  $packs
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Packs $packs)
+    public function edit(Client $client)
     {
         //
     }
@@ -64,10 +64,10 @@ class PacksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Packs  $packs
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Packs $packs)
+    public function update(Request $request, Client $client)
     {
         //
     }
@@ -75,10 +75,10 @@ class PacksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Packs  $packs
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Packs $packs)
+    public function destroy(Client $client)
     {
         //
     }
