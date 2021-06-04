@@ -18,8 +18,10 @@ class CreateClientsTable extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('ville');
-            $table->string('gsm');
-            $table->string('email');
+            $table->string('paye');
+            $table->string('tel');
+            $table->text('adress_mac');
+            $table->bigint('abonnement');
             $table->timestamps();
         });
     }

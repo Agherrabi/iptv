@@ -14,7 +14,8 @@ class PackController extends Controller
      */
     public function index()
     {
-        //
+        $listpack=pack::all();
+        return view('layouts.pack.index',compact('listpack'));
     }
 
     /**
@@ -24,7 +25,7 @@ class PackController extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.pack.create');
     }
 
     /**
@@ -35,7 +36,35 @@ class PackController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'label' => 'required',
+            'prix' => 'required|numeric',
+            'duree' => 'required|numeric',
+
+        ]);
+        $pack = new Pack();
+        $pack->label=$request->get('label');
+        $pack->client_id=$request->get('client_id');
+        $pack->date_creation=$request->get('date_creation');
+        $pack->date_experation=$request->get('date_experation');
+        $pack->status=$request->get('status');
+        $pack->forniceur=$request->get('forniceur');
+        $pack->serveur=$request->get('serveur');
+        $pack->panel=$request->get('panel');
+        $pack->username=$request->get('username');
+        $pack->period_abonnement=$request->get('period_abonnement');
+        $pack->prix=$request->get('prix');
+        $pack->avence=$request->get('avence');
+        $pack->reste=$request->get('reste');
+        $pack->moyen_paiment=$request->get('moyen_paiment');
+        $pack->status_paiment=$request->get('status_paiment');
+        $pack->m3u=$request->get('m3u');
+        $pack->remarque=$request->get('remarque');
+
+        $pack->save();
+
+        return redirect()->back()->with('success','pack est bien ajouté.');
     }
 
     /**
@@ -57,7 +86,7 @@ class PackController extends Controller
      */
     public function edit(Pack $pack)
     {
-        //
+        return view('layouts.pack.edit',compact('pack'));
     }
 
     /**
@@ -67,9 +96,31 @@ class PackController extends Controller
      * @param  \App\Models\Pack  $pack
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pack $pack)
+    public function update(Request $request, $id)
     {
-        //
+        $updatpack = Pack::find($id);
+
+        $updatpack->label=$request->get('label');
+        $updatpack->client_id=$request->get('client_id');
+        $updatpack->date_creation=$request->get('date_creation');
+        $updatpack->date_experation=$request->get('date_experation');
+        $updatpack->status=$request->get('status');
+        $updatpack->forniceur=$request->get('forniceur');
+        $updatpack->serveur=$request->get('serveur');
+        $updatpack->panel=$request->get('panel');
+        $updatpack->username=$request->get('username');
+        $updatpack->period_abonnement=$request->get('period_abonnement');
+        $updatpack->prix=$request->get('prix');
+        $updatpack->avence=$request->get('avence');
+        $updatpack->reste=$request->get('reste');
+        $updatpack->moyen_paiment=$request->get('moyen_paiment');
+        $updatpack->status_paiment=$request->get('status_paiment');
+        $updatpack->m3u=$request->get('m3u');
+        $updatpack->remarque=$request->get('remarque');
+
+
+        $updatpack->save();
+        return redirect('pack')->with('success','pack est bien modifié.');
     }
 
     /**
@@ -78,8 +129,9 @@ class PackController extends Controller
      * @param  \App\Models\Pack  $pack
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pack $pack)
+    public function destroy($id)
     {
-        //
+        Pack::findOrFail($id)->delete();
+        return redirect()->back()->with('success','le pack est Supprimé avec succès.');
     }
 }
