@@ -23,7 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
-        return view('home');
+       $nbrclient = \DB::table('clients')
+            ->get()->count();
+        return view('home',compact('nbrclient'));
     }
 }
