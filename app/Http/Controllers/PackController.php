@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pack;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PackController extends Controller
 {
@@ -14,7 +17,10 @@ class PackController extends Controller
      */
     public function index()
     {
-        $listpack=pack::all();
+        $listpack = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->get();
+
         return view('layouts.pack.index',compact('listpack'));
     }
 
@@ -25,7 +31,8 @@ class PackController extends Controller
      */
     public function create()
     {
-        return view('layouts.pack.create');
+        $listclient=Client::all();
+        return view('layouts.pack.create',compact('listclient'));
     }
 
     /**
@@ -36,16 +43,40 @@ class PackController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
-            'label' => 'required',
             'prix' => 'required|numeric',
-            'duree' => 'required|numeric',
+            'avence' => 'numeric',
+            'date_creation' => 'date',
+            'date_experation' => 'date|after:date_creation',
 
         ]);
+        $date_c = Carbon::parse($request->get('date_creation'));
+        $date_e = Carbon::parse($request->get('date_experation'));
+
+        $diff_date = $date_e->diffInDays($date_c);
+
+        if($request->get('avence')==null)
+        $avence=0;
+        else
+        $avence=$request->get('avence');
+
+        $reste = $request->get('prix') - $avence;
+
+        // if($reste == $request->get('prix')){
+        //         $satupaiment = 'non payé';
+        // }else if($reste == 0){
+        //     $satupaiment = 'payé'
+        // }else if($avence > 0){
+        //     $satupaiment = 'avence'
+        // }else {
+        //     $satupaiment = 'non payé';
+        // }
+
+
+
         $pack = new Pack();
         $pack->label=$request->get('label');
-        $pack->client_id=$request->get('client_id');
+        $pack->client_id=$request->get('client');
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
         $pack->status=$request->get('status');
@@ -53,10 +84,10 @@ class PackController extends Controller
         $pack->serveur=$request->get('serveur');
         $pack->panel=$request->get('panel');
         $pack->username=$request->get('username');
-        $pack->period_abonnement=$request->get('period_abonnement');
+        $pack->period_abonnement=$diff_date;
         $pack->prix=$request->get('prix');
-        $pack->avence=$request->get('avence');
-        $pack->reste=$request->get('reste');
+        $pack->avence=$avence;
+        $pack->reste=$reste;
         $pack->moyen_paiment=$request->get('moyen_paiment');
         $pack->status_paiment=$request->get('status_paiment');
         $pack->m3u=$request->get('m3u');
@@ -86,7 +117,8 @@ class PackController extends Controller
      */
     public function edit(Pack $pack)
     {
-        return view('layouts.pack.edit',compact('pack'));
+        $listclient=Client::all();
+        return view('layouts.pack.edit',compact('pack','listclient'));
     }
 
     /**
@@ -98,28 +130,56 @@ class PackController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updatpack = Pack::find($id);
+        $request->validate([
+            'prix' => 'required|numeric',
+            'avence' => 'numeric',
+            'date_creation' => 'date',
+            'date_experation' => 'date|after:date_creation',
 
-        $updatpack->label=$request->get('label');
-        $updatpack->client_id=$request->get('client_id');
-        $updatpack->date_creation=$request->get('date_creation');
-        $updatpack->date_experation=$request->get('date_experation');
-        $updatpack->status=$request->get('status');
-        $updatpack->forniceur=$request->get('forniceur');
-        $updatpack->serveur=$request->get('serveur');
-        $updatpack->panel=$request->get('panel');
-        $updatpack->username=$request->get('username');
-        $updatpack->period_abonnement=$request->get('period_abonnement');
-        $updatpack->prix=$request->get('prix');
-        $updatpack->avence=$request->get('avence');
-        $updatpack->reste=$request->get('reste');
-        $updatpack->moyen_paiment=$request->get('moyen_paiment');
-        $updatpack->status_paiment=$request->get('status_paiment');
-        $updatpack->m3u=$request->get('m3u');
-        $updatpack->remarque=$request->get('remarque');
+        ]);
+        $date_c = Carbon::parse($request->get('date_creation'));
+        $date_e = Carbon::parse($request->get('date_experation'));
+
+        $diff_date = $date_e->diffInDays($date_c);
+
+        if($request->get('avence')==null)
+        $avence=0;
+        else
+        $avence=$request->get('avence');
+
+        $reste = $request->get('prix') - $avence;
+
+        // if($reste == $request->get('prix')){
+        //         $satupaiment = 'non payé';
+        // }else if($reste == 0){
+        //     $satupaiment = 'payé'
+        // }else if($avence > 0){
+        //     $satupaiment = 'avence'
+        // }else {
+        //     $satupaiment = 'non payé';
+        // }
+
+        $pack = new Pack();
+        $pack->label=$request->get('label');
+        $pack->client_id=$request->get('client');
+        $pack->date_creation=$request->get('date_creation');
+        $pack->date_experation=$request->get('date_experation');
+        $pack->status=$request->get('status');
+        $pack->forniceur=$request->get('forniceur');
+        $pack->serveur=$request->get('serveur');
+        $pack->panel=$request->get('panel');
+        $pack->username=$request->get('username');
+        $pack->period_abonnement=$diff_date;
+        $pack->prix=$request->get('prix');
+        $pack->avence=$avence;
+        $pack->reste=$reste;
+        $pack->moyen_paiment=$request->get('moyen_paiment');
+        $pack->status_paiment=$request->get('status_paiment');
+        $pack->m3u=$request->get('m3u');
+        $pack->remarque=$request->get('remarque');
 
 
-        $updatpack->save();
+        $pack->save();
         return redirect('pack')->with('success','pack est bien modifié.');
     }
 

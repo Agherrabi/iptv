@@ -20,89 +20,88 @@
                             {{csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Client</label>
+                                    <select name="client" id="" class="form-control">
+                                        <option value="">-- choisir un client --</option>
+                                        @foreach($listclient as $client)
+                                        <option value="{{$client->id}}">{{$client->nom.' '.$client->prenom}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger">{{$errors->first('client')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Date de creation</label>
+                                    <input type="date"  name="date_creation" value="{{old('date_creation')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('date_creation')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Date d'experation</label>
+                                    <input type="date"  name="date_experation" value="{{old('date_experation')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('date_experation')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Status </label>
+                                    <select name="status" class="form-control" >
+                                        <option value="">-- Choisir --</option>
+                                        <option value="active">Active</option>
+                                        <option value="expire">Expiré</option>
+                                    </select>
+                                    <span class="text-danger">{{$errors->first('status')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Forniceur</label>
+                                    <input type="text"  name="forniceur" value="{{old('forniceur')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('forniceur')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Serveur</label>
+                                    <input type="text"  name="serveur" value="{{old('serveur')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('serveur')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Panel</label>
+                                    <input type="text"  name="panel" value="{{old('panel')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('panel')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Username</label>
+                                    <input type="text"  name="username" value="{{old('username')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('username')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Prix</label>
+                                    <input type="text"  name="prix" value="{{old('prix')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('prix')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Avence</label>
+                                    <input type="text"  name="avence" value="{{old('avence')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('avence')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Moyen paiment</label>
+                                    <input type="text"  name="moyen_paiment" value="{{old('moyen_paiment')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('moyen_paiment')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Status paiment</label>
+                                    <select  name="status_paiment" class="form-control" style="" required>
+                                        <option value="">-- Choisir --</option>
+                                        <option value="non payé" >Non payé</option>
+                                        <option value="avence" >Avence</option>
+                                        <option value="payé" >payé</option>
+                                    </select>
+                                    <span class="text-danger">{{$errors->first('status_paiment')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >M3u</label>
+                                    <input type="text"  name="m3u" value="{{old('m3u')}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('m3u')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label > </label>
-                                    <input type="text"  name="" value="{{old('')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('')}}</span>
+                                    <label >Remarque</label>
+                                    <textarea class="form-control"  name="remarque" value="{{old('remarque')}}" rows="3"></textarea>
+                                    <span class="text-danger">{{$errors->first('remarque')}}</span>
                                 </div>
                             </div>
                             <!-- /.card-body -->
