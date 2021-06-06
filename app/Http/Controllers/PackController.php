@@ -194,4 +194,21 @@ class PackController extends Controller
         Pack::findOrFail($id)->delete();
         return redirect()->back()->with('success','le pack est Supprimé avec succès.');
     }
+
+    public function recherch(Request $request)
+    {
+
+
+
+        $listpack = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->where('nom', 'LIKE',$request->get('nom'))
+        ->where('abonnement', 'LIKE', $request->get('abonnement'))
+        ->where('status', 'LIKE', $request->get('status'))
+        ->where('status_paiment', 'LIKE',$request->get('status_paiment'))
+        ->get();
+
+        return view('layouts.pack.index',compact('listpack'));
+    }
 }
+

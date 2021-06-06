@@ -4,7 +4,77 @@
 <?php
 use Carbon\Carbon;
 ?>
+    <style>
+    .search-sec{
+        background: #1A4668;padding: 2rem;
+    }
+    .search-slt{
+        display: block;
+        width: 100%;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        height: calc(3rem + 2px) !important;
+        border-radius:0;
+    }
+    .wrn-btn{
+        width: 100%;
+        font-size: 16px;
+        font-weight: 400;
+        text-transform: capitalize;
+        height: calc(3rem + 2px) !important;
+        border-radius:0;
+    }
+
+    </style>
     <div class="card mb-4">
+
+
+    <section class="search-sec">
+        <div class="container">
+            <form action="recherch" method="post" >
+            {{csrf_field()}}
+                <div class="row ">
+                    <div class="col-lg-12 ">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                <input type="text" name="nom" class="form-control search-slt" placeholder="Client">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                <input type="text" name="abonnement" class="form-control search-slt" placeholder="N d'Abonnement">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                <select class="form-control search-slt" name="status">
+                                    <option>Etat</option>
+                                    <option value="active">Active</option>
+                                    <option value="expiré">Expiré</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                <select class="form-control search-slt" name="statusP">
+                                    <option>Statut de paiement</option>
+                                    <option value="non payé">Non Payé</option>
+                                    <option value="avence">Avence</option>
+                                    <option value="payé">Payé</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 p-0">
+                                <button type="submit" class="btn btn-danger wrn-btn">Rechercher</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+
+
+
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             List des abonnements
@@ -158,7 +228,7 @@ use Carbon\Carbon;
             </div>
         </div>
     </div>
-    <div class="card mb-4">
+   {{-- <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             List des Abonnements
@@ -311,7 +381,7 @@ use Carbon\Carbon;
                 </table>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('script')
@@ -322,3 +392,11 @@ use Carbon\Carbon;
 });
 </script>
 @endsection
+
+
+
+
+
+
+
+
