@@ -197,17 +197,20 @@ class PackController extends Controller
 
     public function recherch(Request $request)
     {
+        $input = $request;
+        $query = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id');
 
+        if (isset($input['nom']) && $input['nom'])
+        $query=$query->where('nom', 'LIKE', $input['nom']);
+        if (isset($input['abonnement'])&& $input['abonnement'])
+        $query=$query->where('abonnement', 'LIKE', $input['abonnement']);
+        if (isset($input['status']) && $input['status'])
+        $query=$query->where('status', 'LIKE', $input['status']);
+        if (isset($input['statusP']) && $input['statusP'])
+        $query=$query->where('status_paiment', '=', $input['statusP']);
 
-
-        $listpack = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->where('nom', 'LIKE',$request->get('nom'))
-        ->where('abonnement', 'LIKE', $request->get('abonnement'))
-        ->where('status', 'LIKE', $request->get('status'))
-        ->where('status_paiment', 'LIKE',$request->get('status_paiment'))
-        ->get();
-
+        $listpack =$query->get();
         return view('layouts.pack.index',compact('listpack'));
     }
 }

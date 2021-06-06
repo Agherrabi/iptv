@@ -44,21 +44,21 @@ use Carbon\Carbon;
                                 <input type="text" name="nom" class="form-control search-slt" placeholder="Client">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                <input type="text" name="abonnement" class="form-control search-slt" placeholder="N d'Abonnement">
+                                <input type="text" name="abonnement" class="form-control search-slt" value="{{old('abonnement')}}"placeholder="N d'Abonnement">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                <select class="form-control search-slt" name="status">
-                                    <option>Etat</option>
+                                <select class="form-control search-slt" name="status" >
+                                    <option value="">Etat </option>
                                     <option value="active">Active</option>
                                     <option value="expiré">Expiré</option>
                                 </select>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                <select class="form-control search-slt" name="statusP">
-                                    <option>Statut de paiement</option>
-                                    <option value="non payé">Non Payé</option>
-                                    <option value="avence">Avence</option>
-                                    <option value="payé">Payé</option>
+                                <select class="form-control search-slt" name="statusP" >
+                                    <option value="">Statut de paiement </option>
+                                    <option value="n">Non Payé</option>
+                                    <option value="a">Avence</option>
+                                    <option value="p">Payé</option>
                                 </select>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 p-0">
@@ -107,7 +107,7 @@ use Carbon\Carbon;
                             <td>{{$pack->avence}}</td>
                             <td>{{$pack->reste}}</td>
 
-                            <td>{{$pack->status_paiment}}</td>
+                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
                             <td>
                                 <form action="{{route('pack.destroy',$pack->id)}}" method="post">
                                     {{csrf_field()}}

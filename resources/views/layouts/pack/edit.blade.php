@@ -91,9 +91,9 @@
                                     <label class="h6">Status paiment</label>
                                     <select  name="status_paiment" class="form-control" >
                                         <option value="">-- Choisir --</option>
-                                        <option value="non payé" {{($pack->status_paiment ==='non payé') ? 'selected' : ''}} >Non payé</option>
-                                        <option value="avence" {{($pack->status_paiment ==='avence') ? 'selected' : ''}} >Avence</option>
-                                        <option value="payé" {{($pack->status_paiment ==='payé') ? 'selected' : ''}} >payé</option>
+                                        <option value="n" {{($pack->status_paiment ==='n') ? 'selected' : ''}} >Non payé</option>
+                                        <option value="a" {{($pack->status_paiment ==='a') ? 'selected' : ''}} >Avence</option>
+                                        <option value="p" {{($pack->status_paiment ==='p') ? 'selected' : ''}} >payé</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status_paiment')}}</span>
                                 </div>

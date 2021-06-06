@@ -87,9 +87,9 @@
                                     <label >Status paiment</label>
                                     <select  name="status_paiment" class="form-control" style="" required>
                                         <option value="">-- Choisir --</option>
-                                        <option value="non payé" >Non payé</option>
-                                        <option value="avence" >Avence</option>
-                                        <option value="payé" >payé</option>
+                                        <option value="n" >Non payé</option>
+                                        <option value="a" >Avence</option>
+                                        <option value="p" >payé</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status_paiment')}}</span>
                                 </div>
