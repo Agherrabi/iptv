@@ -29,17 +29,19 @@
                                     </select>
                                     <span class="text-danger">{{$errors->first('client')}}</span>
                                 </div>
-                                <div class="form-group">
-                                    <label >Date de creation</label>
-                                    <input type="date"  name="date_creation" value="{{old('date_creation')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('date_creation')}}</span>
+                                <div class="row">
+                                    <div class="form-group col">
+                                        <label >Date de creation</label>
+                                        <input type="date"  name="date_creation" value="{{old('date_creation')}}" class="form-control" >
+                                        <span class="text-danger">{{$errors->first('date_creation')}}</span>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label >Date d'experation</label>
+                                        <input type="date"  name="date_experation" value="{{old('date_experation')}}" class="form-control" >
+                                        <span class="text-danger">{{$errors->first('date_experation')}}</span>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label >Date d'experation</label>
-                                    <input type="date"  name="date_experation" value="{{old('date_experation')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('date_experation')}}</span>
-                                </div>
-                                <div class="form-group">
+                                {{--<div class="form-group">
                                     <label >Status </label>
                                     <select name="status" class="form-control" >
                                         <option value="">-- Choisir --</option>
@@ -47,7 +49,7 @@
                                         <option value="expire">Expiré</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status')}}</span>
-                                </div>
+                                </div>--}}
                                 <div class="form-group">
                                     <label >Forniceur</label>
                                     <input type="text"  name="forniceur" value="{{old('forniceur')}}" class="form-control" >
@@ -83,7 +85,7 @@
                                     <input type="text"  name="moyen_paiment" value="{{old('moyen_paiment')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('moyen_paiment')}}</span>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label >Status paiment</label>
                                     <select  name="status_paiment" class="form-control" style="" required>
                                         <option value="">-- Choisir --</option>
@@ -92,7 +94,7 @@
                                         <option value="p" >payé</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status_paiment')}}</span>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label >M3u</label>
                                     <input type="text"  name="m3u" value="{{old('m3u')}}" class="form-control" >
@@ -100,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label >Remarque</label>
-                                    <textarea class="form-control"  name="remarque" value="{{old('remarque')}}" rows="3"></textarea>
+                                    <textarea class="form-control"  name="remarque" value="{{old('remarque')}}" rows="3">{{old('remarque')}}</textarea>
                                     <span class="text-danger">{{$errors->first('remarque')}}</span>
                                 </div>
                             </div>

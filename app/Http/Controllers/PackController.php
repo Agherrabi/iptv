@@ -21,7 +21,28 @@ class PackController extends Controller
         ->join('packs', 'packs.client_id', '=', 'clients.id')
         ->get();
 
-        return view('layouts.pack.index',compact('listpack'));
+        $listpack15jours = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        ->get();
+
+        DB::table('packs')
+        ->Where( 'date_experation', '<', Carbon::now())
+        ->update(['status'=>'expiré']);
+
+        $listpackexpire = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status', 'LIKE', 'expiré')
+        ->get();
+
+        $listpacknonpaye = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status_paiment', 'LIKE', 'n')
+        ->get();
+
+
+
+        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'));
     }
 
     /**
@@ -44,6 +65,7 @@ class PackController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'client' => 'required',
             'prix' => 'required|numeric',
             'avence' => 'numeric',
             'date_creation' => 'date',
@@ -62,15 +84,15 @@ class PackController extends Controller
 
         $reste = $request->get('prix') - $avence;
 
-        // if($reste == $request->get('prix')){
-        //         $satupaiment = 'non payé';
-        // }else if($reste == 0){
-        //     $satupaiment = 'payé'
-        // }else if($avence > 0){
-        //     $satupaiment = 'avence'
-        // }else {
-        //     $satupaiment = 'non payé';
-        // }
+        if($reste == $request->get('prix')){
+                $satupaiment = 'non payé';
+        }else if($reste == 0){
+            $satupaiment = 'p';
+        }else if($avence > 0){
+            $satupaiment = 'a';
+        }else {
+            $satupaiment = 'n';
+        }
 
 
 
@@ -79,7 +101,7 @@ class PackController extends Controller
         $pack->client_id=$request->get('client');
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
-        $pack->status=$request->get('status');
+        $pack->status='active';
         $pack->forniceur=$request->get('forniceur');
         $pack->serveur=$request->get('serveur');
         $pack->panel=$request->get('panel');
@@ -89,7 +111,7 @@ class PackController extends Controller
         $pack->avence=$avence;
         $pack->reste=$reste;
         $pack->moyen_paiment=$request->get('moyen_paiment');
-        $pack->status_paiment=$request->get('status_paiment');
+        $pack->status_paiment=$satupaiment;
         $pack->m3u=$request->get('m3u');
         $pack->remarque=$request->get('remarque');
 
@@ -150,13 +172,13 @@ class PackController extends Controller
         $reste = $request->get('prix') - $avence;
 
         // if($reste == $request->get('prix')){
-        //         $satupaiment = 'non payé';
-        // }else if($reste == 0){
-        //     $satupaiment = 'payé'
-        // }else if($avence > 0){
-        //     $satupaiment = 'avence'
-        // }else {
         //     $satupaiment = 'non payé';
+        // }else if($reste == 0){
+        //     $satupaiment = 'p';
+        // }else if($avence > 0){
+        //     $satupaiment = 'a';
+        // }else {
+        //     $satupaiment = 'n';
         // }
 
         $pack = new Pack();
@@ -211,7 +233,26 @@ class PackController extends Controller
         $query=$query->where('status_paiment', '=', $input['statusP']);
 
         $listpack =$query->get();
-        return view('layouts.pack.index',compact('listpack'));
+
+
+
+
+        $listpack15jours = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        ->get();
+
+
+        $listpackexpire = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status', 'LIKE', 'expiré')
+        ->get();
+
+        $listpacknonpaye = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status_paiment', 'LIKE', 'n')
+        ->get();
+        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'));
     }
 }
 

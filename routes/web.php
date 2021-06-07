@@ -14,6 +14,6 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::post('/recherch', [App\Http\Controllers\PackController::class, 'recherch'])->name('recherch');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
