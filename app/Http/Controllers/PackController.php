@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Pack;
+use App\Models\User;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PackController extends Controller
 {
@@ -37,7 +39,7 @@ class PackController extends Controller
 
         $listpacknonpaye = DB::table('clients')
         ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status_paiment', 'LIKE', 'n')
+        ->Where( 'status_paiment', 'LIKE', 'p')
         ->get();
 
 
@@ -64,10 +66,13 @@ class PackController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         $request->validate([
             'client' => 'required',
             'prix' => 'required|numeric',
-            'avence' => 'numeric',
+            'avence' => 'nullable|numeric',
             'date_creation' => 'date',
             'date_experation' => 'date|after:date_creation',
 
@@ -77,10 +82,11 @@ class PackController extends Controller
 
         $diff_date = $date_e->diffInDays($date_c);
 
-        if($request->get('avence')==null)
-        $avence=0;
-        else
-        $avence=$request->get('avence');
+        if (empty($request->get('avence'))) {
+        $avence = 0;
+        }else{
+            $avence = $request->get('avence');
+        }
 
         $reste = $request->get('prix') - $avence;
 
@@ -250,9 +256,40 @@ class PackController extends Controller
 
         $listpacknonpaye = DB::table('clients')
         ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status_paiment', 'LIKE', 'n')
+        ->Where( 'status_paiment', 'LIKE', 'p')
         ->get();
         return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'));
     }
+    public function userindex()
+    {
+       $listuser =  User::all();
+        return view('layouts.user.index',compact('listuser'));
+    }
+
+    public function userajouter()
+    {
+
+        return view('layouts.user.create');
+    }
+
+    public function userstore(Request $request)
+    {
+
+        $request->validate([
+            'nom' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+
+        ]);
+
+        $user = new User();
+        $user->name=$request->get('nom');
+        $user->email=$request->get('email');
+        $user->password=Hash::make($request->get('password'));
+
+        $user->save();
+        return redirect()->back()->with('success','bien ajouté.');
+    }
+
 }
 
