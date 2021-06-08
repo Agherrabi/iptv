@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+
 use Carbon\Carbon;
 use App\Models\Pack;
 use App\Models\User;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Exports\ClientExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PackController extends Controller
 {
@@ -186,8 +189,8 @@ class PackController extends Controller
         // }else {
         //     $satupaiment = 'n';
         // }
+        $pack = Pack::find($id);
 
-        $pack = new Pack();
         $pack->label=$request->get('label');
         $pack->client_id=$request->get('client');
         $pack->date_creation=$request->get('date_creation');
@@ -290,6 +293,60 @@ class PackController extends Controller
         $user->save();
         return redirect()->back()->with('success','bien ajouté.');
     }
+
+    public function useredit($id)
+    {
+            $user = User::findOrFail($id);
+            return view('layouts.user.edit',compact('user'));
+
+    }
+    public function userupdate(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+
+        if($request->get('password')){
+            $request->validate([
+                'nom' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+
+            ]);
+            $user->name=$request->get('nom');
+            $user->email=$request->get('email');
+            $user->password=Hash::make($request->get('password'));
+
+            $user->save();
+            return  redirect()->back()->with('success','bien edité.');
+        }else{
+            $request->validate([
+                'nom' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+
+        ]);
+
+    }
+}
+
+
+    public function userdelete($id){
+        if($id == 1){
+            return redirect()->back()->with('error','vous ne pouvez pas supprimer cet administrateur.');
+        }else{
+            User::findOrFail($id)->delete();
+            return redirect()->back()->with('success','le pack est Supprimé avec succès.');
+        }
+    }
+
+
+    public function clientexport()
+    {
+        return Excel::download(new ClientExport, 'cliens.xlsx');
+    }
+
+
+
+
+
 
 }
 

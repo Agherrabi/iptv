@@ -2,10 +2,15 @@
 
 @section('content')
     <div class="card mb-4">
-        <div class="card-header d-flex">
+            @if(session()->has('success'))
+                <div class="alert alert-success">{{session()->get('success')}}</div>
+            @endif
+            @if(session()->has('error'))
+                <div class="alert alert-danger">{{session()->get('error')}}</div>
+            @endif
+            <div class="card-header d-flex">
             <div class="p-2"><i class="fas fa-table me-1 "></i>
             List des user</div>
-            <div class="mr-auto p-2"><a class="btn btn-sm btn-info" href="">Ajouter</a></div>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -25,10 +30,10 @@
                         <td>{{$user->email}}</td>
                         <td>@if($user->is_admin == 1) Admin @else user @endif</td>
                         <td>
-                            <form action="#" method="post">
+                            <form action="{{route('userdelete',$user->id)}}" method="post">
                                 {{csrf_field()}}
                                 {{method_field('DELETE')}}
-                                <a href="{{url('user/'.$user->id.'/edit')}}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+                                <a href="{{url('useredit/'.$user->id)}}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
                                 <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
 
                             </form>

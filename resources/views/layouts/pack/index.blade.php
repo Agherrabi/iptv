@@ -57,7 +57,7 @@ use Carbon\Carbon;
                                 <select class="form-control search-slt" name="statusP" >
                                     <option value="">Statut de paiement </option>
                                     <option value="n">Non Payé</option>
-                                    <option value="a">Avence</option>
+                                    <option value="a">Avance</option>
                                     <option value="p">Payé</option>
                                 </select>
                             </div>
@@ -81,18 +81,18 @@ use Carbon\Carbon;
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">
-                <table class="table table-sm" class="display" id="datatablesSimple" >
+                <table class="table table-sm" id="datatablesSimple" >
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th>Abonnement</th>
-                            <th>reste</th>
+                            <th>N Abm</th>
+                            <th >Jours Reste</th>
                             <th>status</th>
                             <th>Prix</th>
-                            <th>Avence</th>
+                            <th>Avance</th>
                             <th>Reste</th>
-                            <th>Status</th>
-                            <th style="min-width:90px !important">Actions</th>
+                            <th>Paiement</th>
+                            <th style="min-width:100px !important">Actions</th>
                         </tr>
                     </thead>
 
@@ -101,13 +101,13 @@ use Carbon\Carbon;
                         <tr>
                             <td>{{$pack->nom.' '.$pack->prenom}}</td>
                             <td>{{$pack->abonnement}}</td>
-                            <td>{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}</td>
+                            <td>@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif {{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}</td>
                             <td>{{$pack->status}}</td>
                             <td>{{$pack->prix}}</td>
                             <td>{{$pack->avence}}</td>
                             <td>{{$pack->reste}}</td>
 
-                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
+                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
                             <td>
                                 <form action="{{route('pack.destroy',$pack->id)}}" method="post">
                                     {{csrf_field()}}
@@ -158,7 +158,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Jours restants</label>
-                                        <input type="text" class="form-control"  value="{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}" disabled>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Status</label>
@@ -185,7 +185,7 @@ use Carbon\Carbon;
                                         <input type="text" class="form-control" value="{{$pack->prix}}" disabled>
                                     </div>
                                     <div class="form-group col">
-                                        <label for="message-text" class="col-form-label" >Avence</label>
+                                        <label for="message-text" class="col-form-label" >Avance</label>
                                         <input type="text" class="form-control"  value="{{$pack->avence}}" disabled>
                                     </div>
                                     <div class="form-group col">
@@ -201,7 +201,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col">
                                         <label for="message-text" class="col-form-label" >Status paiment</label>
-                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
                                     </div>
                                     <div class="form-group col-4">
                                         <label class="col-form-label">M3U</label>
@@ -236,17 +236,17 @@ use Carbon\Carbon;
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">
-                <table class="table table-hover border" class="display" id="datatablesSimple3" >
+                <table class="table table-hover border" id="datatablesSimple3" >
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th>Abonnement</th>
-                            <th>reste</th>
+                            <th>N Abm</th>
+                            <th>Jours Reste</th>
                             <th>status</th>
                             <th>Prix</th>
-                            <th>Avence</th>
+                            <th>Avance</th>
                             <th>Reste</th>
-                            <th>Status</th>
+                            <th>Paiement</th>
                             <th style="min-width:90px !important">Actions</th>
                         </tr>
                     </thead>
@@ -256,13 +256,13 @@ use Carbon\Carbon;
                         <tr>
                             <td>{{$pack->nom.' '.$pack->prenom}}</td>
                             <td>{{$pack->abonnement}}</td>
-                            <td>{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}</td>
+                            <td>@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif @endif {{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}</td>
                             <td>{{$pack->status}}</td>
                             <td>{{$pack->prix}}</td>
                             <td>{{$pack->avence}}</td>
                             <td>{{$pack->reste}}</td>
 
-                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
+                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
                             <td>
                                 <form action="{{route('pack.destroy',$pack->id)}}" method="post">
                                     {{csrf_field()}}
@@ -313,7 +313,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Jours restants</label>
-                                        <input type="text" class="form-control"  value="{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}" disabled>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Status</label>
@@ -340,7 +340,7 @@ use Carbon\Carbon;
                                         <input type="text" class="form-control" value="{{$pack->prix}}" disabled>
                                     </div>
                                     <div class="form-group col">
-                                        <label for="message-text" class="col-form-label" >Avence</label>
+                                        <label for="message-text" class="col-form-label" >Avance</label>
                                         <input type="text" class="form-control"  value="{{$pack->avence}}" disabled>
                                     </div>
                                     <div class="form-group col">
@@ -356,7 +356,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col">
                                         <label for="message-text" class="col-form-label" >Status paiment</label>
-                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
                                     </div>
                                     <div class="form-group col-4">
                                         <label class="col-form-label">M3U</label>
@@ -390,17 +390,17 @@ use Carbon\Carbon;
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">
-                <table class="table table-hover border" class="display" id="datatablesSimple1" >
+                <table class="table table-hover border" id="datatablesSimple1" >
                     <thead class="thead-dark">
                         <tr>
                             <th>Client</th>
-                            <th>Abonnement</th>
-                            <th>reste</th>
+                            <th>N Abm</th>
+                            <th>Jours Reste</th>
                             <th>status</th>
                             <th>Prix</th>
-                            <th>Avence</th>
+                            <th>Avance</th>
                             <th>Reste</th>
-                            <th>Status</th>
+                            <th>Paiement</th>
                             <th style="min-width:90px !important">Actions</th>
                         </tr>
                     </thead>
@@ -410,13 +410,13 @@ use Carbon\Carbon;
                         <tr>
                             <td>{{$pack->nom.' '.$pack->prenom}}</td>
                             <td>{{$pack->abonnement}}</td>
-                            <td>{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}</td>
+                            <td>@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}</td>
                             <td>{{$pack->status}}</td>
                             <td>{{$pack->prix}}</td>
                             <td>{{$pack->avence}}</td>
                             <td>{{$pack->reste}}</td>
 
-                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
+                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
                             <td>
                                 <form action="{{route('pack.destroy',$pack->id)}}" method="post">
                                     {{csrf_field()}}
@@ -467,7 +467,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Jours restants</label>
-                                        <input type="text" class="form-control"  value="{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}" disabled>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Status</label>
@@ -494,7 +494,7 @@ use Carbon\Carbon;
                                         <input type="text" class="form-control" value="{{$pack->prix}}" disabled>
                                     </div>
                                     <div class="form-group col">
-                                        <label for="message-text" class="col-form-label" >Avence</label>
+                                        <label for="message-text" class="col-form-label" >Avance</label>
                                         <input type="text" class="form-control"  value="{{$pack->avence}}" disabled>
                                     </div>
                                     <div class="form-group col">
@@ -510,7 +510,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col">
                                         <label for="message-text" class="col-form-label" >Status paiment</label>
-                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
                                     </div>
                                     <div class="form-group col-4">
                                         <label class="col-form-label">M3U</label>
@@ -544,17 +544,17 @@ use Carbon\Carbon;
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">
-                <table class="table table-hover border" class="display" id="datatablesSimple2" >
+                <table class="table table-hover border" id="datatablesSimple2" >
                     <thead>
                         <tr>
                             <th>Client</th>
-                            <th>Abonnement</th>
-                            <th>reste</th>
+                            <th>N Abm</th>
+                            <th>Jours Reste</th>
                             <th>status</th>
                             <th>Prix</th>
-                            <th>Avence</th>
+                            <th>Avance</th>
                             <th>Reste</th>
-                            <th>Status</th>
+                            <th>Paiement</th>
                             <th style="min-width:90px !important">Actions</th>
                         </tr>
                     </thead>
@@ -564,13 +564,13 @@ use Carbon\Carbon;
                         <tr>
                             <td>{{$pack->nom.' '.$pack->prenom}}</td>
                             <td>{{$pack->abonnement}}</td>
-                            <td>{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}</td>
+                            <td>@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif @endif {{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}</td>
                             <td>{{$pack->status}}</td>
                             <td>{{$pack->prix}}</td>
                             <td>{{$pack->avence}}</td>
                             <td>{{$pack->reste}}</td>
 
-                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
+                            <td>@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif</td>
                             <td>
                                 <form action="{{route('pack.destroy',$pack->id)}}" method="post">
                                     {{csrf_field()}}
@@ -621,7 +621,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Jours restants</label>
-                                        <input type="text" class="form-control"  value="{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::parse($pack->date_creation))}}" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->date_experation < Carbon::now()) @if(Carbon::parse($pack->date_experation)->diffInDays(Carbon::now()) != 0) - @endif     @endif{{Carbon::parse($pack->date_experation)->diffInDays(Carbon::now())}}" disabled>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="message-text" class="col-form-label" >Status</label>
@@ -648,7 +648,7 @@ use Carbon\Carbon;
                                         <input type="text" class="form-control" value="{{$pack->prix}}" disabled>
                                     </div>
                                     <div class="form-group col">
-                                        <label for="message-text" class="col-form-label" >Avence</label>
+                                        <label for="message-text" class="col-form-label" >Avance</label>
                                         <input type="text" class="form-control"  value="{{$pack->avence}}" disabled>
                                     </div>
                                     <div class="form-group col">
@@ -664,7 +664,7 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="form-group col">
                                         <label for="message-text" class="col-form-label" >Status paiment</label>
-                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avence @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
+                                        <input type="text" class="form-control"  value="@if($pack->status_paiment == 'n') Non payé @elseif($pack->status_paiment == 'a') Avance @elseif($pack->status_paiment == 'p') Payé @else Autre  @endif" disabled>
                                     </div>
                                     <div class="form-group col-4">
                                         <label class="col-form-label">M3U</label>
@@ -692,106 +692,21 @@ use Carbon\Carbon;
         </div>
     </div>
 
-
-
-
 --}}
+
+
+
 
 
 
 @endsection
 
-
 @section('script')
 <script>
-    //     $(document).ready( function () {
-
-    //         $('#maree_id').change(function(){
-
-    //             var maree_id = document.getElementById('maree_id').value;
-    //             if(maree_id > 0){
-    //                 fetchRecords(maree_id);
-    //             }
-    //             });
-
-    //             function fetchRecords(id){
-
-    //             $.ajax({
-
-    //             url: "{{URL::to('packdata')}}",
-    //             type: "POST",
-    //             data: {
-    //             "_token": "{{ csrf_token() }}",
-    //             "id": id
-    //             },
-    //             dataType: 'json',
-    //             success: function(response){
-    //                 console.log(response);
-    //                 var len = 0;
-    //                 $('#facteurTable tbody').empty(); // Empty <tbody>
-    //                 if(response['data'] != null){
-
-    //                     len = response['data'].length;
-    //                 }
-
-    //                 if(len > 0){
-    //                     for(var i=0; i<len; i++){
-    //                     var dech_id = response['data'][i].dech_id;
-    //                     var espece_id = response['data'][i].espece_id;
-    //                     var maree = response['data'][i].maria_nom;
-    //                     var ref = response['data'][i].ref;
-    //                     var description = response['data'][i].description;
-    //                     var nom_espece = response['data'][i].nom_espece;
-    //                     var maree_id = response['data'][i].maree_id;
-    //                     var qtterestant = response['data'][i].qtterestant;
-    //                     var qtte_dech = response['data'][i].qtte_dech;
-    //                     var date_saisir = response['data'][i].date_saisir;
-    //                     var pm = response['data'][i].pm;
-    //                     var pru= response['data'][i].pru;
-    //                     var devis = response['data'][i].devis;
-    //                     var tara = response['data'][i].tara;
-
-    //                     var tr_str = "<tr>" +
-    //                         "<td align='center' name='id[]'>" + maree + "</td>" +
-    //                         "<td align='center' name='ref[]'>" + ref + "</td>" +
-    //                         "<td align='center' name='espece_id[]'>" + description + "</td>" +
-    //                         "<td align='center' ><label >" + qtterestant + "</label></td>" +
-    //                         "<td align='center'><input class='t12 form-control' type='text' name='qtte_commande[]' ><small class='error' id='error'>{{$errors->first('espece_id')}}{{$errors->first('qtte_commande')}}</small><input type='hidden'class='t11' name='qtterestant[]' value=" + qtterestant + "> <input type='hidden' name='espece_id[]' value=" + espece_id + "><input type='hidden' name='description[]' value=" + description + "><input type='hidden' name='dech_id[]' value=" + dech_id + "><input type='hidden' name='pm[]' value=" + pm + "><input type='hidden' name='pru[]' value=" + pru + "><input type='hidden' name='devis[]' value=" + devis + "><input type='hidden' name='tara[]' value=" + tara + "></td>"+
-    //                         "<td align='center'><a href='javascript:void(0);'  class='remove'><i class='fas fa-trash'></a></td>" +
-    //                     "</tr>";
-
-    //                     $("#facteurTable tbody").append(tr_str);
-    //                     }
-    //                 }else{
-    //                     var tr_str = "<tr>" +
-    //                         "<td align='center' colspan='4'>No record found.</td>" +
-    //                     "</tr>";
-
-    //                     $("#facteurTable tbody").append(tr_str);
-    //                 }
+    $(document).ready( function () {
 
 
-    //                 var qttec = document.querySelectorAll('.t12');
-    //                 var er = document.querySelectorAll('.error');
-
-    //                 $(".t12").keyup(function(){
-    //                     var inp1 = parseInt($(this).siblings(".t11").val(), 10);
-    //                     if($(this).val() > inp1){
-    //             $(this).css("border", "1px solid red");
-    //                     }
-
-    //                     else{
-    //             $(this).css("border", "1px solid #ced4da");
-    //                     }
-
-    //                     });
-
-    //                 }
-    //             });
-    //         }
-
-
-    // } );
+});
 
 
 </script>

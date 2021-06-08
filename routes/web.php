@@ -15,9 +15,13 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::resource('/client', 'App\Http\Controllers\ClientController');
     Route::resource('/pack', 'App\Http\Controllers\PackController');
     Route::post('/recherch', [App\Http\Controllers\PackController::class, 'recherch'])->name('recherch');
-    Route::get('/user', [App\Http\Controllers\PackController::class, 'userindex'])->name('user');
-    Route::get('/userajouter', [App\Http\Controllers\PackController::class, 'userajouter'])->name('userajouter');
-    Route::post('/userstore', [App\Http\Controllers\PackController::class, 'userstore'])->name('userstore');
+    Route::get('/clientexport', [App\Http\Controllers\PackController::class, 'clientexport'])->name('clientexport');
+    Route::get('/user', [App\Http\Controllers\PackController::class, 'userindex'])->name('user')->middleware('is_admin');
+    Route::get('/userajouter', [App\Http\Controllers\PackController::class, 'userajouter'])->name('userajouter')->middleware('is_admin');
+    Route::post('/userstore', [App\Http\Controllers\PackController::class, 'userstore'])->name('userstore')->middleware('is_admin');
+    Route::get('/useredit/{id}', [App\Http\Controllers\PackController::class, 'useredit'])->name('useredit')->middleware('is_admin');
+    Route::put('/userupdate/{id}', [App\Http\Controllers\PackController::class, 'userupdate'])->name('userupdate')->middleware('is_admin');
+    Route::DELETE('/userdelete/{id}', [App\Http\Controllers\PackController::class, 'userdelete'])->name('userdelete')->middleware('is_admin');
 });
 
 Auth::routes(['register' => false]);

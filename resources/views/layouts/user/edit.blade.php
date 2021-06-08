@@ -4,7 +4,7 @@
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            Edit le client
+            Edit le user
         </div>
         <div class="card-body">
         <div class="card-body">
@@ -14,49 +14,44 @@
                             @if(session()->has('success'))
                                 <div class="alert alert-success">{{session()->get('success')}}</div>
                             @endif
-
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger">{{session()->get('error')}}</div>
+                            @endif
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form  action="{{url('client/'.$client->id)}}" method="post">
+                        <form  action="{{url('userupdate/'.$user->id)}}" method="post">
                             <input type="hidden" name="_method" value="PUT">
                             {{csrf_field()}}
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label >Nom de client </label>
-                                    <input type="text"  name="nom" class="form-control" value="{{$client->nom}}" >
-                                    <span class="text-danger">{{$errors->first('nom')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >Prenom</label>
-                                    <input type="text"  name="prenom" class="form-control" value="{{$client->prenom}}" >
-                                    <span class="text-danger">{{$errors->first('prenom')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >N Abonnement </label>
-                                    <input type="text"  name="abonnement" class="form-control" value="{{$client->abonnement}}" >
-                                    <span class="text-danger">{{$errors->first('abonnement')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >Paye</label>
-                                    <input type="text"  name="paye" class="form-control" value="{{$client->paye}}" >
-                                    <span class="text-danger">{{$errors->first('paye')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >Ville</label>
-                                    <input type="text"  name="ville" class="form-control" value="{{$client->ville}}" >
-                                    <span class="text-danger">{{$errors->first('ville')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >Tel</label>
-                                    <input type="text"  name="tel" class="form-control" value="{{$client->tel}}" >
-                                    <span class="text-danger">{{$errors->first('tel')}}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label >Adress mac/App</label>
-                                    <input type="text"  name="adress_mac" class="form-control" value="{{$client->adress_mac}}" >
-                                    <span class="text-danger">{{$errors->first('adress_mac')}}</span>
-                                </div>
+                            <div class="form-group">
+                                <label >Nom</label>
+                                <input type="text"  name="nom" class="form-control" placeholder="nom" value="{{$user->name}}" >
+                                <span class="text-danger">{{$errors->first('nom')}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label >Email</label>
+                                <input type="text"  name="email" class="form-control" placeholder="Email" value="{{$user->email}}">
+                                <span class="text-danger">{{$errors->first('email')}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label >Password</label>
+                                <input type="password"  name="password" class="form-control" placeholder="Password" >
+                                <span class="text-danger">{{$errors->first('password')}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label >Password</label>
+                                <input type="password"  name="password_confirmation" class="form-control" placeholder="Password"  >
+                                <span class="text-danger">{{$errors->first('password_confirmation')}}</span>
+                            </div>
+                            <div class="form-group">
+                                <label >Role</label>
+                               <select name="is_admin"  class="form-control">
 
+                                    <option value="0"  {{($user->is_admin ==0) ? 'selected' : ''}}>User</option>
+                                    <option value="1"  {{($user->is_admin == 1) ? 'selected' : ''}}>Admin</option>
+                               </select>
+                                <span class="text-danger">{{$errors->first('is_admin')}}</span>
+                            </div>
                             </div>
                             <!-- /.card-body -->
 

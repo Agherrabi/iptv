@@ -20,7 +20,7 @@
                             {{csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label >Client</label>
+                                    <label >Client <small class="h5 text-danger">*</small></label>
                                     <select name="client" id="" class="form-control">
                                         <option value="">-- choisir un client --</option>
                                         @foreach($listclient as $client)
@@ -31,12 +31,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label >Date de creation</label>
+                                        <label >Date de creation <small class="h5 text-danger">*</small></label>
                                         <input type="date"  name="date_creation" value="{{old('date_creation')}}" class="form-control" >
                                         <span class="text-danger">{{$errors->first('date_creation')}}</span>
                                     </div>
                                     <div class="form-group col">
-                                        <label >Date d'experation</label>
+                                        <label >Date d'experation <small class="h5 text-danger">*</small></label>
                                         <input type="date"  name="date_experation" value="{{old('date_experation')}}" class="form-control" >
                                         <span class="text-danger">{{$errors->first('date_experation')}}</span>
                                     </div>
@@ -71,12 +71,12 @@
                                     <span class="text-danger">{{$errors->first('username')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Prix</label>
+                                    <label >Prix <small class="h5 text-danger">*</small></label>
                                     <input type="text"  name="prix" value="{{old('prix')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('prix')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Avence</label>
+                                    <label >Avance</label>
                                     <input type="text"  name="avence" value="{{old('avence')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('avence')}}</span>
                                 </div>
@@ -90,7 +90,7 @@
                                     <select  name="status_paiment" class="form-control" style="" required>
                                         <option value="">-- Choisir --</option>
                                         <option value="n" >Non payé</option>
-                                        <option value="a" >Avence</option>
+                                        <option value="a" >Avance</option>
                                         <option value="p" >payé</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status_paiment')}}</span>
@@ -105,6 +105,7 @@
                                     <textarea class="form-control"  name="remarque" value="{{old('remarque')}}" rows="3">{{old('remarque')}}</textarea>
                                     <span class="text-danger">{{$errors->first('remarque')}}</span>
                                 </div>
+                                <small class="h5 text-danger">(*)</small>: champs obligatoires
                             </div>
                             <!-- /.card-body -->
 
