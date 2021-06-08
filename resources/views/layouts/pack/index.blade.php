@@ -41,24 +41,24 @@ use Carbon\Carbon;
                     <div class="col-lg-12 ">
                         <div class="row">
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                <input type="text" name="nom" class="form-control search-slt" placeholder="Client">
+                                <input type="text" name="nom" class="form-control search-slt" value="{{ $nom ?? '' }}"placeholder="Client">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
-                                <input type="text" name="abonnement" class="form-control search-slt" value="{{old('abonnement')}}"placeholder="N d'Abonnement">
+                                <input type="text" name="abonnement" class="form-control search-slt" value="{{ $abonnement ?? '' }}" placeholder="N d'Abonnement">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
                                 <select class="form-control search-slt" name="status" >
                                     <option value="">Etat </option>
-                                    <option value="active">Active</option>
-                                    <option value="expiré">Expiré</option>
+                                    <option value="active" @if(!empty($status) && $status == 'active')  selected @endif>Active</option>
+                                    <option value="expiré" @if(!empty($status) && $status == 'expiré')   selected @endif>Expiré</option>
                                 </select>
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 p-0">
                                 <select class="form-control search-slt" name="statusP" >
                                     <option value="">Statut de paiement </option>
-                                    <option value="n">Non Payé</option>
-                                    <option value="a">Avance</option>
-                                    <option value="p">Payé</option>
+                                    <option value="n" @if(!empty($statusP) && $statusP == 'n')   selected @endif>Non Payé</option>
+                                    <option value="a" @if(!empty($statusP) && $statusP == 'a')   selected @endif>Avance</option>
+                                    <option value="p" @if(!empty($statusP) && $statusP == 'p')   selected @endif>Payé</option>
                                 </select>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 p-0">

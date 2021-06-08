@@ -3,9 +3,10 @@
 @section('content')
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            List des Client
-            <a class="btn btn-sm btn-info" href="{{route('clientexport')}}">Export client</a>
+            <div class="row">
+                <div class="col align-self-start"><i class="fas fa-table me-1"></i>List des Client</div>
+                <div class="col align-self-end " style="text-align: right !important;"><a class="btn btn-sm btn-secondary" href="{{route('clientexport')}}">Export client</a></div>
+            </div>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">

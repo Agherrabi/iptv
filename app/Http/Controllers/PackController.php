@@ -228,6 +228,7 @@ class PackController extends Controller
 
     public function recherch(Request $request)
     {
+
         $input = $request;
         $query = DB::table('clients')
         ->join('packs', 'packs.client_id', '=', 'clients.id');
@@ -261,7 +262,14 @@ class PackController extends Controller
         ->join('packs', 'packs.client_id', '=', 'clients.id')
         ->Where( 'status_paiment', 'LIKE', 'p')
         ->get();
-        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'));
+
+        $nom = $input['nom'];
+        $abonnement = $input['abonnement'];
+        $status = $input['status'];
+        $statusP = $input['statusP'];
+
+        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye','nom','abonnement','status','statusP'));
+
     }
     public function userindex()
     {
@@ -289,7 +297,7 @@ class PackController extends Controller
         $user->name=$request->get('nom');
         $user->email=$request->get('email');
         $user->password=Hash::make($request->get('password'));
-
+        $user->is_admin =$request->get('is_admin');
         $user->save();
         return redirect()->back()->with('success','bien ajouté.');
     }
@@ -314,7 +322,7 @@ class PackController extends Controller
             $user->name=$request->get('nom');
             $user->email=$request->get('email');
             $user->password=Hash::make($request->get('password'));
-
+            $user->is_admin =$request->get('is_admin');
             $user->save();
             return  redirect()->back()->with('success','bien edité.');
         }else{
@@ -323,6 +331,12 @@ class PackController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255'],
 
         ]);
+        $user->name=$request->get('nom');
+        $user->email=$request->get('email');
+        $user->is_admin =$request->get('is_admin');
+
+        $user->save();
+        return  redirect()->back()->with('success','bien edité.');
 
     }
 }
