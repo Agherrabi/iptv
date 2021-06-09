@@ -8,11 +8,61 @@
         <meta name="author" content="" />
         <title>Iptv</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-        <link href="http://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        <link href="{{asset('css/dataTables.min.css')}}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <style>
+            .search-sec{
+                background: #1A4668;padding: 2rem;
+            }
+            .search-slt{
+                display: block;
+                width: 100%;
+                font-size: 0.875rem;
+                line-height: 1.5;
+                color: #55595c;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #ccc;
+                height: calc(3rem + 2px) !important;
+                border-radius:0;
+            }
+            .wrn-btn{
+                width: 100%;
+                font-size: 16px;
+                font-weight: 400;
+                text-transform: capitalize;
+                height: calc(3rem + 2px) !important;
+                border-radius:0;
+            }
+            .dataTable-top {
+            padding: 0 0 1rem !important;
+                }
+                    .dataTable-table {
+                    border-collapse: collapse !important;
+                }
+                .dataTable-wrapper .dataTable-container {
+                    font-size: 0.865rem;
+                }
 
+                tbody, td, tfoot, th, thead, tr {
+                    /* border-color: inherit; */
+                    border-style: solid;
+                    border-color: rgba(0, 0, 0, 0.125);
+                    border-width: 0;
+
+                }
+                .dataTables_wrapper .dataTables_filter {
+                    float: right;
+                    text-align: right;
+                    margin-bottom: 10px;
+                }
+                .table > :not(:last-child) > :last-child > *, .dataTable-table > :not(:last-child) > :last-child > * {
+                    border-bottom-color: currentColor;
+                    border-bottom: none;
+                }
+        </style>
+        @yield('header')
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -85,7 +135,7 @@
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Client
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -96,7 +146,7 @@
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsepck" aria-expanded="false" aria-controls="collapsepck">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-archive"></i></div>
                                 Abonnements
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -106,9 +156,13 @@
                                     <a class="nav-link" href="{{url('pack/create')}}">Ajouter</a>
                                 </nav>
                             </div>
+                            <a class="nav-link collapsed" href="{{route('reste15j')}}" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-hourglass-end"></i></div>
+                                15 Jours Restants
+                            </a>
                             @if(Auth::user()->is_admin==1)
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsuser" aria-expanded="false" aria-controls="collapsepck">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
                                 Users
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -124,9 +178,10 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        iptv
-                    </div>
+                      {{--
+                     <div class="small">Connecté en tant que:</div>
+                        iptv admin
+                    </div> --}}
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -152,10 +207,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('js/scripts.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="{{asset('js/dataTables.min.js')}}"></script>
         @yield('script')
 
     </body>

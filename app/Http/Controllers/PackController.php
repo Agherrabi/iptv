@@ -271,6 +271,16 @@ class PackController extends Controller
         return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye','nom','abonnement','status','statusP'));
 
     }
+    public function reste15j()
+    {
+
+       $listpack15jours = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        ->get();
+        
+        return view('layouts.pack.reste15',compact('listpack15jours'));
+    }
     public function userindex()
     {
        $listuser =  User::all();

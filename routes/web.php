@@ -15,6 +15,7 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::resource('/client', 'App\Http\Controllers\ClientController');
     Route::resource('/pack', 'App\Http\Controllers\PackController');
     Route::post('/recherch', [App\Http\Controllers\PackController::class, 'recherch'])->name('recherch');
+    Route::get('/reste15j', [App\Http\Controllers\PackController::class, 'reste15j'])->name('reste15j');
     Route::get('/clientexport', [App\Http\Controllers\PackController::class, 'clientexport'])->name('clientexport');
     Route::get('/user', [App\Http\Controllers\PackController::class, 'userindex'])->name('user')->middleware('is_admin');
     Route::get('/userajouter', [App\Http\Controllers\PackController::class, 'userajouter'])->name('userajouter')->middleware('is_admin');

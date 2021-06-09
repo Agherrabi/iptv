@@ -4,32 +4,7 @@
 <?php
 use Carbon\Carbon;
 ?>
-    <style>
-    .search-sec{
-        background: #1A4668;padding: 2rem;
-    }
-    .search-slt{
-        display: block;
-        width: 100%;
-        font-size: 0.875rem;
-        line-height: 1.5;
-        color: #55595c;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        height: calc(3rem + 2px) !important;
-        border-radius:0;
-    }
-    .wrn-btn{
-        width: 100%;
-        font-size: 16px;
-        font-weight: 400;
-        text-transform: capitalize;
-        height: calc(3rem + 2px) !important;
-        border-radius:0;
-    }
-
-    </style>
+  
     <div class="card mb-4">
 
 
@@ -81,8 +56,8 @@ use Carbon\Carbon;
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">
-                <table class="table table-sm" id="datatablesSimple" >
-                    <thead>
+                <table class="table table-sm dataTable-table" id="datatablesSimple" >
+                    <thead style="background-color:#1A4668!important;"class="text-white">
                         <tr>
                             <th>Client</th>
                             <th>N Abm</th>
@@ -703,11 +678,38 @@ use Carbon\Carbon;
 
 @section('script')
 <script>
-    $(document).ready( function () {
-
-
-});
-
+$(document).ready(function() {
+    $('#datatablesSimple').DataTable( {
+        "language": {"sEmptyTable":     "Aucune donnée disponible dans le tableau",
+	"sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+	"sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+	"sInfoFiltered":   "(filtré à partir de _MAX_ éléments au total)",
+	"sInfoThousands":  ",",
+	"sLengthMenu":     "Afficher _MENU_ éléments",
+	"sLoadingRecords": "Chargement...",
+	"sProcessing":     "Traitement...",
+	"sSearch":         "Rechercher :",
+	"sZeroRecords":    "Aucun élément correspondant trouvé",
+	"oPaginate": {
+		"sFirst":    "Premier",
+		"sLast":     "Dernier",
+		"sNext":     "Suivant",
+		"sPrevious": "Précédent"
+	},
+	"oAria": {
+		"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+		"sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+	},
+	"select": {
+        	"rows": {
+         		"_": "%d lignes sélectionnées",
+         		"0": "Aucune ligne sélectionnée",
+        		"1": "1 ligne sélectionnée"
+        	}
+	}
+        }
+    } );
+} );
 
 </script>
 @endsection
