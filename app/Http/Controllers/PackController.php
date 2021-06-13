@@ -26,28 +26,28 @@ class PackController extends Controller
         ->join('packs', 'packs.client_id', '=', 'clients.id')
         ->get();
 
-        $listpack15jours = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
-        ->get();
+        // $listpack15jours = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        // ->get();
 
         DB::table('packs')
         ->Where( 'date_experation', '<', Carbon::now())
         ->update(['status'=>'expiré']);
 
-        $listpackexpire = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status', 'LIKE', 'expiré')
-        ->get();
+        // $listpackexpire = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'status', 'LIKE', 'expiré')
+        // ->get();
 
-        $listpacknonpaye = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status_paiment', 'LIKE', 'p')
-        ->get();
+        // $listpacknonpaye = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'status_paiment', 'LIKE', 'p')
+        // ->get(); ,'listpack15jours','listpackexpire','listpacknonpaye'
 
 
 
-        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'));
+        return view('layouts.pack.index',compact('listpack'));
     }
 
     /**
@@ -99,6 +99,9 @@ class PackController extends Controller
             $satupaiment = 'p';
         }else if($avence > 0){
             $satupaiment = 'a';
+
+        }else if($avence > $request->get('prix')){
+            $satupaiment = 'p';
         }else {
             $satupaiment = 'n';
         }
@@ -228,24 +231,24 @@ class PackController extends Controller
         ->join('packs', 'packs.client_id', '=', 'clients.id')
         ->get();
 
-        $listpack15jours = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
-        ->get();
+        // $listpack15jours = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        // ->get();
 
-        $listpackexpire = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status', 'LIKE', 'expiré')
-        ->get();
+        // $listpackexpire = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'status', 'LIKE', 'expiré')
+        // ->get();
 
-        $listpacknonpaye = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id')
-        ->Where( 'status_paiment', 'LIKE', 'p')
-        ->get();
+        // $listpacknonpaye = DB::table('clients')
+        // ->join('packs', 'packs.client_id', '=', 'clients.id')
+        // ->Where( 'status_paiment', 'LIKE', 'p')
+        // ->get();  ,'listpack15jours','listpackexpire','listpacknonpaye'
 
 
 
-        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'))->with('success','Supprimé avec succès.');
+        return view('layouts.pack.index',compact('listpack'))->with('success','Supprimé avec succès.');
         //return redirect()->back();
     }
 
