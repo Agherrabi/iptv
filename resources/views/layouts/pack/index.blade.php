@@ -4,13 +4,13 @@
 <?php
 use Carbon\Carbon;
 ?>
-  
+
     <div class="card mb-4">
 
 
     <section class="search-sec">
         <div class="container">
-            <form action="recherch" method="post" >
+            <form action="{{route('recherch')}}" method="post" >
             {{csrf_field()}}
                 <div class="row ">
                     <div class="col-lg-12 ">

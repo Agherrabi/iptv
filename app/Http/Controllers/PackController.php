@@ -94,7 +94,7 @@ class PackController extends Controller
         $reste = $request->get('prix') - $avence;
 
         if($reste == $request->get('prix')){
-                $satupaiment = 'non payé';
+                $satupaiment = 'n';
         }else if($reste == 0){
             $satupaiment = 'p';
         }else if($avence > 0){
@@ -222,8 +222,31 @@ class PackController extends Controller
      */
     public function destroy($id)
     {
-        Pack::findOrFail($id)->delete();
-        return redirect()->back()->with('success','le pack est Supprimé avec succès.');
+        Pack::find($id)->delete();
+
+        $listpack = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->get();
+
+        $listpack15jours = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
+        ->get();
+
+        $listpackexpire = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status', 'LIKE', 'expiré')
+        ->get();
+
+        $listpacknonpaye = DB::table('clients')
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->Where( 'status_paiment', 'LIKE', 'p')
+        ->get();
+
+
+
+        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye'))->with('success','Supprimé avec succès.');
+        //return redirect()->back();
     }
 
     public function recherch(Request $request)
@@ -278,9 +301,11 @@ class PackController extends Controller
         ->join('packs', 'packs.client_id', '=', 'clients.id')
         ->Where( 'date_experation', '<=', Carbon::now()->addDay(15))
         ->get();
-        
+
         return view('layouts.pack.reste15',compact('listpack15jours'));
     }
+
+
     public function userindex()
     {
        $listuser =  User::all();
