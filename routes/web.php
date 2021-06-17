@@ -14,6 +14,9 @@ Route::get('/', function () {
 Route::group(['middleware'=> 'auth'],function(){
     Route::resource('/client', 'App\Http\Controllers\ClientController');
     Route::resource('/pack', 'App\Http\Controllers\PackController');
+    Route::resource('/fournisseur', 'App\Http\Controllers\FournisseurController');
+    Route::resource('/panel', 'App\Http\Controllers\PanelController');
+    Route::post('/getpanel', [App\Http\Controllers\PanelController::class, 'getpanel'])->name('getpanel');
     Route::post('/recherch', [App\Http\Controllers\PackController::class, 'recherch'])->name('recherch');
     Route::get('/reste15j', [App\Http\Controllers\PackController::class, 'reste15j'])->name('reste15j');
     Route::get('/clientexport', [App\Http\Controllers\PackController::class, 'clientexport'])->name('clientexport');

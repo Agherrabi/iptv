@@ -41,42 +41,55 @@
                                         <span class="text-danger">{{$errors->first('date_experation')}}</span>
                                     </div>
                                 </div>
-                                {{--<div class="form-group">
-                                    <label >Status </label>
-                                    <select name="status" class="form-control" >
-                                        <option value="">-- Choisir --</option>
-                                        <option value="active">Active</option>
-                                        <option value="expire">Expiré</option>
+                                {{--
+                                    <div class="form-group">
+                                        <label >Status </label>
+                                        <select name="status" class="form-control" >
+                                            <option value="">-- Choisir --</option>
+                                            <option value="active">Active</option>
+                                            <option value="expire">Expiré</option>
+                                        </select>
+                                        <span class="text-danger">{{$errors->first('status')}}</span>
+                                    </div>
+                                --}}
+                                <div class="form-group">
+                                    <label >Fournisseur</label>
+                                    <select name="fournisseur" id="four_id"  class="form-control">
+                                        <option value="">-- choisir un Fournisseur --</option>
+                                        @foreach($listfournisseur as $fournisseur)
+                                        <option value="{{$fournisseur->id}}">{{$fournisseur->nom}}</option>
+                                        @endforeach
                                     </select>
-                                    <span class="text-danger">{{$errors->first('status')}}</span>
-                                </div>--}}
-                                <div class="form-group">
-                                    <label >Forniceur</label>
-                                    <input type="text"  name="forniceur" value="{{old('forniceur')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('forniceur')}}</span>
+
+                                    <span class="text-danger">{{$errors->first('fournisseur')}}</span>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label >Serveur</label>
                                     <input type="text"  name="serveur" value="{{old('serveur')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('serveur')}}</span>
-                                </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Username</label>
+                                        <input type="text"  name="username" value="{{old('username')}}" class="form-control" >
+                                        <span class="text-danger">{{$errors->first('username')}}</span>
+                                    </div>
+                                --}}
                                 <div class="form-group">
                                     <label >Panel</label>
-                                    <input type="text"  name="panel" value="{{old('panel')}}" class="form-control" >
+                                    <select name="panel" id="panel_dropdown" class="form-control" value="{{old('panel')}}">
+                                            <option value="">--------</option>
+                                    </select>
+
                                     <span class="text-danger">{{$errors->first('panel')}}</span>
                                 </div>
-                                <div class="form-group">
-                                    <label >Username</label>
-                                    <input type="text"  name="username" value="{{old('username')}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('username')}}</span>
-                                </div>
+
                                 <div class="form-group">
                                     <label >Prix <small class="h5 text-danger">*</small></label>
                                     <input type="text"  name="prix" value="{{old('prix')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('prix')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Avance</label>
+                                    <label >Mantant payé</label>
                                     <input type="text"  name="avence" value="{{old('avence')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('avence')}}</span>
                                 </div>
@@ -119,3 +132,64 @@
         </div>
     </div>
 @endsection
+
+
+@section('script')
+<script>
+     $(document).ready( function () {
+
+$('#four_id').change(function(){
+    var maree_id = document.getElementById('four_id').value;
+    if(maree_id > 0){
+        fetchRecords(maree_id);
+    }
+    });
+
+    function fetchRecords(id){
+
+    $.ajax({
+
+    url: "{{URL::to('getpanel')}}",
+    type: "POST",
+    data: {
+    "_token": "{{ csrf_token() }}",
+    "id": id
+    },
+    dataType: 'json',
+    success: function(response){
+        console.log(response);
+        var len = 0;
+        $('#panel_dropdown').empty() ; // Empty <tbody>
+        if(response['data'] != null){
+
+            len = response['data'].length;
+        }
+
+        if(len > 0){
+            for(var i=0; i<len; i++){
+            var id = response['data'][i].id;
+            var nom = response['data'][i].nom;
+
+            var option = "<option value='"+id+"'>"+nom+"</option>";
+
+            $("#panel_dropdown").append(option);
+            }
+        }else{
+            $('#panel_dropdown').empty() ;
+        }
+
+        }
+    });
+}
+
+
+
+
+
+
+});
+
+</script>
+@endsection
+
+

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Pack;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 use App\Exports\ClientExport;
 use Illuminate\Support\Facades\DB;
@@ -45,9 +46,9 @@ class PackController extends Controller
         // ->Where( 'status_paiment', 'LIKE', 'p')
         // ->get(); ,'listpack15jours','listpackexpire','listpacknonpaye'
 
+        $listfournisseur=Fournisseur::all();
 
-
-        return view('layouts.pack.index',compact('listpack'));
+        return view('layouts.pack.index',compact('listpack','listfournisseur'));
     }
 
     /**
@@ -58,7 +59,8 @@ class PackController extends Controller
     public function create()
     {
         $listclient=Client::all();
-        return view('layouts.pack.create',compact('listclient'));
+        $listfournisseur=Fournisseur::all();
+        return view('layouts.pack.create',compact('listclient','listfournisseur'));
     }
 
     /**
@@ -69,8 +71,6 @@ class PackController extends Controller
      */
     public function store(Request $request)
     {
-
-
 
         $request->validate([
             'client' => 'required',
@@ -199,9 +199,9 @@ class PackController extends Controller
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
         $pack->status=$request->get('status');
-        $pack->forniceur=$request->get('forniceur');
+        $pack->forniceur_id=$request->get('four_id');
         $pack->serveur=$request->get('serveur');
-        $pack->panel=$request->get('panel');
+        $pack->panel_id=$request->get('panel_id');
         $pack->username=$request->get('username');
         $pack->period_abonnement=$diff_date;
         $pack->prix=$request->get('prix');
