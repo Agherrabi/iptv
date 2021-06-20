@@ -54,7 +54,7 @@
                                 --}}
                                 <div class="form-group">
                                     <label >Fournisseur</label>
-                                    <select name="fournisseur" id="four_id"  class="form-control">
+                                    <select name="four_id" id="four_id"  class="form-control">
                                         <option value="">-- choisir un Fournisseur --</option>
                                         @foreach($listfournisseur as $fournisseur)
                                         <option value="{{$fournisseur->id}}">{{$fournisseur->nom}}</option>
@@ -76,7 +76,7 @@
                                 --}}
                                 <div class="form-group">
                                     <label >Panel</label>
-                                    <select name="panel" id="panel_dropdown" class="form-control" value="{{old('panel')}}">
+                                    <select name="panel_id" id="panel_dropdown" class="form-control" value="{{old('panel')}}">
                                             <option value="">--------</option>
                                     </select>
 

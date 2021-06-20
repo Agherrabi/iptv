@@ -53,25 +53,37 @@
                                     <span class="text-danger">{{$errors->first('status')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label class="h6">Forniceur</label>
-                                    <input type="text"  name="forniceur" value="{{$pack->forniceur}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('forniceur')}}</span>
+                                    <label >Fournisseur</label>
+                                    <select name="four_id" id="four_id"  class="form-control">
+                                        <option value="">-- choisir un Fournisseur --</option>
+                                        @foreach($listfournisseur as $fournisseur)
+                                        <option value="{{$fournisseur->id}}" {{($fournisseur->id ===$pack->four_id) ? 'selected' : ''}}>{{$fournisseur->nom}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    <span class="text-danger">{{$errors->first('fournisseur')}}</span>
                                 </div>
+                            {{--
                                 <div class="form-group">
-                                    <label class="h6">Serveur</label>
-                                    <input type="text"  name="serveur" value="{{$pack->serveur}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('serveur')}}</span>
-                                </div>
+                                        <label class="h6">Serveur</label>
+                                        <input type="text"  name="serveur" value="{{$pack->serveur}}" class="form-control" >
+                                        <span class="text-danger">{{$errors->first('serveur')}}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="h6">Username</label>
+                                        <input type="text"  name="username" value="{{$pack->username}}" class="form-control" >
+                                        <span class="text-danger">{{$errors->first('username')}}</span>
+                                    </div>
+                            --}}
                                 <div class="form-group">
-                                    <label class="h6">Panel</label>
-                                    <input type="text"  name="panel" value="{{$pack->panel}}" class="form-control" >
+                                    <label >Panel</label>
+                                    <select name="panel_id" id="panel_dropdown" class="form-control" value="{{$pack->serveur}}">
+                                            <option value="">{{$pack->panel}}</option>
+                                    </select>
+
                                     <span class="text-danger">{{$errors->first('panel')}}</span>
                                 </div>
-                                <div class="form-group">
-                                    <label class="h6">Username</label>
-                                    <input type="text"  name="username" value="{{$pack->username}}" class="form-control" >
-                                    <span class="text-danger">{{$errors->first('username')}}</span>
-                                </div>
+
                                 <div class="form-group">
                                     <label class="h6">Prix<small class="h5 text-danger">(*)</small></label>
                                     <input type="text"  name="prix" value="{{$pack->prix}}" class="form-control" >
@@ -121,4 +133,65 @@
         </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+<script>
+     $(document).ready( function () {
+
+$('#four_id').change(function(){
+    var maree_id = document.getElementById('four_id').value;
+    if(maree_id > 0){
+        fetchRecords(maree_id);
+    }
+    });
+
+    function fetchRecords(id){
+
+    $.ajax({
+
+    url: "{{URL::to('getpanel')}}",
+    type: "POST",
+    data: {
+    "_token": "{{ csrf_token() }}",
+    "id": id
+    },
+    dataType: 'json',
+    success: function(response){
+        console.log(response);
+        var len = 0;
+        $('#panel_dropdown').empty() ; // Empty <tbody>
+        if(response['data'] != null){
+
+            len = response['data'].length;
+        }
+
+        if(len > 0){
+            var option1 = "<option value='' >-- Choisir un Panel --</option>";$("#panel_dropdown").append(option1);
+            for(var i=0; i<len; i++){
+            var id = response['data'][i].id;
+            var nom = response['data'][i].nom;
+
+            var option = "<option value='"+id+"' >"+nom+"</option>";
+
+
+            $("#panel_dropdown").append(option);
+            }
+        }else{
+            $('#panel_dropdown').empty() ;
+            var option = "<option value='' >-- vide --</option>";
+        }
+
+        }
+    });
+}
+
+
+
+
+
+
+});
+
+</script>
 @endsection

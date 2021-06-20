@@ -106,6 +106,8 @@ class PanelController extends Controller
         $updatpanel->qtte=$request->get('qtte');
 
         $updatpanel->save();
+
+        DB::table('packs')->where('panel_id',$id)->update(['serveur' => $request->get('serveur'),'username' => $request->get('username')]);
         return redirect('panel')->with('success','panel est bien modifié.');
     }
 

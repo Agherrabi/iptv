@@ -41,17 +41,17 @@
                                     <input type="text"  name="tel" class="form-control" value="{{$fournisseur->tel}}" >
                                     <span class="text-danger">{{$errors->first('tel')}}</span>
                                 </div>
-                                <div class="form-group">
-                                    <label >Panel :</label>
+                                <div class="form-group mt-2">
+                                    <label >choisissez les panel :</label>
                                     <table>
                                         @foreach($listpanel as $panel)
                                             <tr>
                                                 <div>
-                                                    <input type="checkbox" id="scales" name="panel[]" value="{{$panel->id}}"
+                                                    <input type="checkbox" id="scales" name="panel[]" style="zoom: 1.5;"  value="{{$panel->id}}"
                                                     @if (count($four_panels->where('panel_id', $panel->id)))
                                                         checked
                                                     @endif>
-                                                    <label >{{$panel->nom}}</label>
+                                                    <label class="fw-bold ">{{$panel->nom}}</label>
                                                 </div>
                                             </tr>
                                         @endforeach

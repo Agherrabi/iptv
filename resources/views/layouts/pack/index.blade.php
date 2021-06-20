@@ -37,7 +37,35 @@ use Carbon\Carbon;
                                 </select>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                                <button type="submit" class="btn btn-danger wrn-btn">Rechercher</button>
+                                <button type="submit" class="btn btn-danger wrn-btn" name="Rechercher">Rechercher</button>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-secondary" name="abmtExport">Export Abonnement</button>
+                            <p>
+                                <a data-toggle="collapse" class="text-dark" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                   Autre option
+                                </a>
+                            </p>
+                            <div class="collapse" id="collapseExample">
+
+                            <div class="row">
+                                <div class="col-6 ">
+                                    <label class="sr-only" for="inlineFormInputGroup">date d</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend ">
+                                            <div class="input-group-text p-2">Date Début</div>
+                                        </div>
+                                        <input type="date" name="date_d" class="form-control p-2" id="inlineFormInputGroup" value="{{ $date_d ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="sr-only" for="inlineFormInputGroup">date f</label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text p-2">Date Fin</div>
+                                        </div>
+                                        <input type="date" name="date_f" class="form-control" id="inlineFormInputGroup" value="{{ $date_d ?? '' }}">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -50,9 +78,13 @@ use Carbon\Carbon;
 
 
 
-    <div class="card-header">
+    <div class="card-header row">
+           <div class="col">
             <i class="fas fa-table me-1"></i>
-            List des abonnements
+                List des abonnements
+            </div>
+
+            <div class="col align-self-end " style="text-align: right !important;"><a class="btn btn-sm btn-secondary" href="{{route('abmtexport')}}"></a></div>
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">

@@ -1,5 +1,8 @@
 @extends('layouts.home')
-
+@section('header')
+<style>
+</style>
+@endsection
 @section('content')
     <div class="card mb-4">
         <div class="card-header">
@@ -41,14 +44,14 @@
                                     <span class="text-danger">{{$errors->first('tel')}}</span>
                                 </div>
 
-                                <div class="form-group">
-                                    <label >Panel :</label>
+                                <div class="form-group mt-2">
+                                    <label >choisissez les panel :</label>
                                     <table>
                                         @foreach($listpanel as $panel)
                                             <tr>
-                                                <div>
-                                                    <input type="checkbox" id="scales" name="panel[]"  value="{{$panel->id}}">
-                                                    <label >{{$panel->nom}}</label>
+                                                <div class="form-group d-flex align-items-center">
+                                                    <input type="checkbox" id="scales" name="panel[]" style="zoom: 1.5;" value="{{$panel->id}}">
+                                                    <label class="fw-bold " >{{$panel->nom}}</label>
                                                 </div>
                                             </tr>
                                         @endforeach

@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 use App\Exports\ClientExport;
+use App\Exports\AbmtExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -97,16 +98,17 @@ class PackController extends Controller
                 $satupaiment = 'n';
         }else if($reste == 0){
             $satupaiment = 'p';
+        }
+        else if($avence > $request->get('prix')){
+            $satupaiment = 'p';
         }else if($avence > 0){
             $satupaiment = 'a';
-
-        }else if($avence > $request->get('prix')){
-            $satupaiment = 'p';
         }else {
             $satupaiment = 'n';
         }
 
-
+        $paneldetail = DB::table('panels')->where('id',$request->get('panel_id'))->get();
+        $fourdetail = DB::table('fournisseurs')->where('id',$request->get('four_id'))->get();
 
         $pack = new Pack();
         $pack->label=$request->get('label');
@@ -114,10 +116,12 @@ class PackController extends Controller
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
         $pack->status='active';
-        $pack->forniceur=$request->get('forniceur');
-        $pack->serveur=$request->get('serveur');
-        $pack->panel=$request->get('panel');
-        $pack->username=$request->get('username');
+        $pack->four_id=$request->get('four_id');
+        $pack->forniceur=$fourdetail[0]->nom;
+        $pack->panel_id=$request->get('panel_id');
+        $pack->panel=$paneldetail[0]->nom;
+        $pack->serveur=$paneldetail[0]->serveur;
+        $pack->username=$paneldetail[0]->username;
         $pack->period_abonnement=$diff_date;
         $pack->prix=$request->get('prix');
         $pack->avence=$avence;
@@ -152,7 +156,9 @@ class PackController extends Controller
     public function edit(Pack $pack)
     {
         $listclient=Client::all();
-        return view('layouts.pack.edit',compact('pack','listclient'));
+        $listclient=Client::all();
+        $listfournisseur=Fournisseur::all();
+        return view('layouts.pack.edit',compact('pack','listclient','listclient','listfournisseur'));
     }
 
     /**
@@ -164,6 +170,7 @@ class PackController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'prix' => 'required|numeric',
             'avence' => 'numeric',
@@ -192,6 +199,10 @@ class PackController extends Controller
         // }else {
         //     $satupaiment = 'n';
         // }
+
+        $paneldetail = DB::table('panels')->where('id',$request->get('panel_id'))->get();
+        $fourdetail = DB::table('fournisseurs')->where('id',$request->get('four_id'))->get();
+
         $pack = Pack::find($id);
 
         $pack->label=$request->get('label');
@@ -199,10 +210,14 @@ class PackController extends Controller
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
         $pack->status=$request->get('status');
-        $pack->forniceur_id=$request->get('four_id');
-        $pack->serveur=$request->get('serveur');
+
+        $pack->four_id=$request->get('four_id');
+        $pack->forniceur=$fourdetail[0]->nom;
         $pack->panel_id=$request->get('panel_id');
-        $pack->username=$request->get('username');
+        $pack->panel=$paneldetail[0]->nom;
+        $pack->serveur=$paneldetail[0]->serveur;
+        $pack->username=$paneldetail[0]->username;
+
         $pack->period_abonnement=$diff_date;
         $pack->prix=$request->get('prix');
         $pack->avence=$avence;
@@ -255,9 +270,14 @@ class PackController extends Controller
     public function recherch(Request $request)
     {
 
+        if($request->has('abmtExport')) {
+
+            return Excel::download(new AbmtExport($request->input('nom'),$request->input('abonnement'),$request->input('status'),$request->input('statusP'),$request->input('date_d'),$request->input('date_f')), 'abmt.xlsx');
+        }
         $input = $request;
         $query = DB::table('clients')
         ->join('packs', 'packs.client_id', '=', 'clients.id');
+
 
         if (isset($input['nom']) && $input['nom'])
         $query=$query->where('nom', 'LIKE', $input['nom']);
@@ -267,7 +287,8 @@ class PackController extends Controller
         $query=$query->where('status', 'LIKE', $input['status']);
         if (isset($input['statusP']) && $input['statusP'])
         $query=$query->where('status_paiment', '=', $input['statusP']);
-
+        if (isset($input['date_d']) && $input['date_d'])
+        $query=$query->whereBetween('date_experation',[$input['date_d'],$input['date_f']]);
         $listpack =$query->get();
 
 
@@ -393,6 +414,13 @@ class PackController extends Controller
     public function clientexport()
     {
         return Excel::download(new ClientExport, 'cliens.xlsx');
+    }
+
+    public function abmtexport(Request $request)
+    {
+        $status =   $request->input('status');
+        return Excel::download(new AbmtExport($status), 'abmt.xlsx');
+
     }
 
 
