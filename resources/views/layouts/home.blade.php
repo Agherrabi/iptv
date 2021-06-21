@@ -134,6 +134,21 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsepck" aria-expanded="false" aria-controls="collapsepck">
+                                <div class="sb-nav-link-icon"><i class="fas fa-archive"></i></div>
+                                Abonnements
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapsepck" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="{{url('pack')}}">Afficher</a>
+                                    <a class="nav-link" href="{{url('pack/create')}}">Ajouter</a>
+                                </nav>
+                            </div>
+                            <a class="nav-link collapsed" href="{{route('reste15j')}}" >
+                                <div class="sb-nav-link-icon"><i class="fas fa-hourglass-end"></i></div>
+                                15 Jours Restants
+                            </a>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Client
@@ -167,21 +182,7 @@
                                     <a class="nav-link" href="{{url('panel/create')}}">Ajouter</a>
                                 </nav>
                             </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsepck" aria-expanded="false" aria-controls="collapsepck">
-                                <div class="sb-nav-link-icon"><i class="fas fa-archive"></i></div>
-                                Abonnements
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsepck" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{url('pack')}}">Afficher</a>
-                                    <a class="nav-link" href="{{url('pack/create')}}">Ajouter</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="{{route('reste15j')}}" >
-                                <div class="sb-nav-link-icon"><i class="fas fa-hourglass-end"></i></div>
-                                15 Jours Restants
-                            </a>
+
                             @if(Auth::user()->is_admin==1)
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsuser" aria-expanded="false" aria-controls="collapsepck">
                                 <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>

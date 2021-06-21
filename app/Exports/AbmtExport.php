@@ -6,12 +6,13 @@ use App\Models\Pack;
 use App\Models\Client;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AbmtExport implements FromCollection, WithHeadings
+class AbmtExport implements FromCollection, WithHeadings,WithStyles
 {
     use Exportable;
     /**
@@ -28,15 +29,14 @@ class AbmtExport implements FromCollection, WithHeadings
         $this->date_d = $date_d;
         $this->date_f = $date_f;
 
-
-
     }
     public function collection()
      {
 
         $query = DB::table('clients')
-        ->join('packs', 'packs.client_id', '=', 'clients.id');
-
+        ->join('packs', 'packs.client_id', '=', 'clients.id')
+        ->select('nom', 'prenom', 'abonnement','ville', 'paye','tel','adress_mac','date_creation','date_experation','status','forniceur','panel',
+        'serveur','username','prix','avence','reste','status_paiment','moyen_paiment','m3u','remarque');
         if (isset($this->nom))
         $query=$query->where('nom', 'LIKE', $this->nom);
         if (isset($this->abonnement))
@@ -57,10 +57,48 @@ class AbmtExport implements FromCollection, WithHeadings
         return [
             'Nom',
             'Prenom',
-            'Tel',
-            'Paye',
+            'N Abmt',
             'Ville',
+            'Paye',
+            'Tel',
+            'Adress Mac',
+            'date_creation',
+            'date_experation',
+            'Status',
+            'Fournisseur',
+            'Panel',
+            'Serveur',
+            'Username',
+            'Prix',
+            'Montant Payé',
+            'Reste',
+            'Status Paiment',
+            'Moyen Paiment',
+            'M3U',
+            'Remarque',
+
+
+
         ];
+    }
+
+
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            // Style the first row as bold text.
+            1    => ['font' => ['bold' => true]],
+
+
+
+            // Styling a specific cell by coordinate.
+
+
+            // Styling an entire column.
+
+        ];
+
     }
 
 }

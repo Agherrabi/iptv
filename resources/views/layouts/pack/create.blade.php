@@ -20,8 +20,8 @@
                             {{csrf_field()}}
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label >Client <small class="h5 text-danger">*</small></label>
-                                    <select name="client" id="" class="form-control">
+                                    <label class="h6">Client <small class="h5 text-danger">*</small></label>
+                                    <select name="client" id="" class="form-control form-select">
                                         <option value="">-- choisir un client --</option>
                                         @foreach($listclient as $client)
                                         <option value="{{$client->id}}">{{$client->nom.' '.$client->prenom}}</option>
@@ -31,12 +31,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label >Date de creation <small class="h5 text-danger">*</small></label>
+                                        <label class="h6">Date de creation <small class="h5 text-danger">*</small></label>
                                         <input type="date"  name="date_creation" value="{{old('date_creation')}}" class="form-control" >
                                         <span class="text-danger">{{$errors->first('date_creation')}}</span>
                                     </div>
                                     <div class="form-group col">
-                                        <label >Date d'experation <small class="h5 text-danger">*</small></label>
+                                        <label class="h6">Date d'experation <small class="h5 text-danger">*</small></label>
                                         <input type="date"  name="date_experation" value="{{old('date_experation')}}" class="form-control" >
                                         <span class="text-danger">{{$errors->first('date_experation')}}</span>
                                     </div>
@@ -53,8 +53,8 @@
                                     </div>
                                 --}}
                                 <div class="form-group">
-                                    <label >Fournisseur</label>
-                                    <select name="four_id" id="four_id"  class="form-control">
+                                    <label class="h6">Fournisseur</label>
+                                    <select name="four_id" id="four_id"  class="form-control form-select">
                                         <option value="">-- choisir un Fournisseur --</option>
                                         @foreach($listfournisseur as $fournisseur)
                                         <option value="{{$fournisseur->id}}">{{$fournisseur->nom}}</option>
@@ -75,8 +75,8 @@
                                     </div>
                                 --}}
                                 <div class="form-group">
-                                    <label >Panel</label>
-                                    <select name="panel_id" id="panel_dropdown" class="form-control" value="{{old('panel')}}">
+                                    <label class="h6">Panel</label>
+                                    <select name="panel_id" id="panel_dropdown" class="form-control form-select" value="{{old('panel_id')}}">
                                             <option value="">--------</option>
                                     </select>
 
@@ -84,17 +84,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label >Prix <small class="h5 text-danger">*</small></label>
+                                    <label class="h6">Prix <small class="h5 text-danger">*</small></label>
                                     <input type="text"  name="prix" value="{{old('prix')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('prix')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Mantant payé</label>
+                                    <label class="h6">Avance</label>
                                     <input type="text"  name="avence" value="{{old('avence')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('avence')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Moyen paiment</label>
+                                    <label class="h6">Moyen paiment</label>
                                     <input type="text"  name="moyen_paiment" value="{{old('moyen_paiment')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('moyen_paiment')}}</span>
                                 </div>
@@ -109,12 +109,12 @@
                                     <span class="text-danger">{{$errors->first('status_paiment')}}</span>
                                 </div> --}}
                                 <div class="form-group">
-                                    <label >M3u</label>
+                                    <label class="h6">M3u</label>
                                     <input type="text"  name="m3u" value="{{old('m3u')}}" class="form-control" >
                                     <span class="text-danger">{{$errors->first('m3u')}}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label >Remarque</label>
+                                    <label class="h6">Remarque</label>
                                     <textarea class="form-control"  name="remarque" value="{{old('remarque')}}" rows="3">{{old('remarque')}}</textarea>
                                     <span class="text-danger">{{$errors->first('remarque')}}</span>
                                 </div>

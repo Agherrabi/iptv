@@ -23,7 +23,7 @@
                             <div class="card-body">
                             <div class="form-group">
                                     <label class="h6">Client <small class="h5 text-danger">(*)</small></label>
-                                    <select name="client" id="" class="form-control">
+                                    <select name="client" id="" class="form-control form-select">
                                         <option value="">-- choisir un client --</option>
                                         @foreach($listclient as $client)
                                         <option value="{{$client->id}}" {{$client->id == $pack->client_id ? 'selected' : ''}}>{{$client->nom.' '.$client->prenom}}</option>
@@ -43,7 +43,7 @@
                                         <span class="text-danger">{{$errors->first('date_experation')}}</span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                              {{-- <div class="form-group">
                                     <label class="h6">Status </label>
                                     <select name="status" class="form-control"  >
                                         <option value="">-- Choisir --</option>
@@ -51,10 +51,10 @@
                                         <option value="expire"{{($pack->status ==='expire') ? 'selected' : ''}}>Expiré</option>
                                     </select>
                                     <span class="text-danger">{{$errors->first('status')}}</span>
-                                </div>
+                                </div>--}}
                                 <div class="form-group">
                                     <label >Fournisseur</label>
-                                    <select name="four_id" id="four_id"  class="form-control">
+                                    <select name="four_id" id="four_id"  class="form-control form-select">
                                         <option value="">-- choisir un Fournisseur --</option>
                                         @foreach($listfournisseur as $fournisseur)
                                         <option value="{{$fournisseur->id}}" {{($fournisseur->id ===$pack->four_id) ? 'selected' : ''}}>{{$fournisseur->nom}}</option>
@@ -77,8 +77,8 @@
                             --}}
                                 <div class="form-group">
                                     <label >Panel</label>
-                                    <select name="panel_id" id="panel_dropdown" class="form-control" value="{{$pack->serveur}}">
-                                            <option value="">{{$pack->panel}}</option>
+                                    <select name="panel_id" id="panel_dropdown" class="form-control form-select" >
+                                            <option value="{{$panel_id[0]->id}}">{{$pack->panel}}</option>
                                     </select>
 
                                     <span class="text-danger">{{$errors->first('panel')}}</span>
@@ -100,6 +100,18 @@
                                     <span class="text-danger">{{$errors->first('moyen_paiment')}}</span>
                                 </div>
                                 <div class="form-group">
+                                    <label class="h6">M3u</label>
+                                    <input type="text"  name="m3u" value="{{$pack->m3u}}" class="form-control" >
+                                    <span class="text-danger">{{$errors->first('m3u')}}</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="h6">Remarque</label>
+                                    <textarea class="form-control"  name="remarque" rows="3">{{$pack->remarque}}</textarea>
+                                    <span class="text-danger">{{$errors->first('remarque')}}</span>
+                                </div>
+                                <small class="h5 text-danger">(*)</small>: champs obligatoires
+                            </div>
+                             {{--   <div class="form-group">
                                     <label class="h6">Status paiment</label>
                                     <select  name="status_paiment" class="form-control" >
                                         <option value="">-- Choisir --</option>
@@ -120,7 +132,7 @@
                                     <span class="text-danger">{{$errors->first('remarque')}}</span>
                                 </div>
                                 <small class="h5 text-danger">(*)</small>: champs obligatoires
-                            </div>
+                            </div>--}}
                             <!-- /.card-body -->
 
                             <div class="card-footer">

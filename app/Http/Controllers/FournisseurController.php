@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Pack;
 use App\Models\Panel;
+use App\Exports\fourExport;
 use App\Models\Fournisseur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FournisseurController extends Controller
 {
@@ -123,5 +125,9 @@ class FournisseurController extends Controller
     {
         Fournisseur::findOrFail($id)->delete();
         return redirect()->back()->with('success','le fournisseur est Supprimé avec succès.');
+    }
+    public function fourexport()
+    {
+        return Excel::download(new fourExport, 'fournisseur.xlsx');
     }
 }

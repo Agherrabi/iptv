@@ -158,7 +158,10 @@ class PackController extends Controller
         $listclient=Client::all();
         $listclient=Client::all();
         $listfournisseur=Fournisseur::all();
-        return view('layouts.pack.edit',compact('pack','listclient','listclient','listfournisseur'));
+
+        $panel_id =DB::table('panels')->where('id',$pack->panel_id)->select('id')->get();
+
+        return view('layouts.pack.edit',compact('pack','listclient','listclient','listfournisseur','panel_id'));
     }
 
     /**
@@ -173,7 +176,7 @@ class PackController extends Controller
 
         $request->validate([
             'prix' => 'required|numeric',
-            'avence' => 'numeric',
+            'avence' => 'nullable|numeric',
             'date_creation' => 'date',
             'date_experation' => 'date|after:date_creation',
 
@@ -183,22 +186,26 @@ class PackController extends Controller
 
         $diff_date = $date_e->diffInDays($date_c);
 
-        if($request->get('avence')==null)
-        $avence=0;
-        else
-        $avence=$request->get('avence');
+        if (empty($request->get('avence'))) {
+            $avence = 0;
+            }else{
+                $avence = $request->get('avence');
+            }
 
-        $reste = $request->get('prix') - $avence;
+            $reste = $request->get('prix') - $avence;
 
-        // if($reste == $request->get('prix')){
-        //     $satupaiment = 'non payé';
-        // }else if($reste == 0){
-        //     $satupaiment = 'p';
-        // }else if($avence > 0){
-        //     $satupaiment = 'a';
-        // }else {
-        //     $satupaiment = 'n';
-        // }
+            if($reste == $request->get('prix')){
+                    $satupaiment = 'n';
+            }else if($reste == 0){
+                $satupaiment = 'p';
+            }
+            else if($avence > $request->get('prix')){
+                $satupaiment = 'p';
+            }else if($avence > 0){
+                $satupaiment = 'a';
+            }else {
+                $satupaiment = 'n';
+            }
 
         $paneldetail = DB::table('panels')->where('id',$request->get('panel_id'))->get();
         $fourdetail = DB::table('fournisseurs')->where('id',$request->get('four_id'))->get();
@@ -209,7 +216,7 @@ class PackController extends Controller
         $pack->client_id=$request->get('client');
         $pack->date_creation=$request->get('date_creation');
         $pack->date_experation=$request->get('date_experation');
-        $pack->status=$request->get('status');
+        //$pack->status=$request->get('status');
 
         $pack->four_id=$request->get('four_id');
         $pack->forniceur=$fourdetail[0]->nom;
@@ -223,7 +230,7 @@ class PackController extends Controller
         $pack->avence=$avence;
         $pack->reste=$reste;
         $pack->moyen_paiment=$request->get('moyen_paiment');
-        $pack->status_paiment=$request->get('status_paiment');
+        $pack->status_paiment=$satupaiment;
         $pack->m3u=$request->get('m3u');
         $pack->remarque=$request->get('remarque');
 
@@ -314,8 +321,10 @@ class PackController extends Controller
         $abonnement = $input['abonnement'];
         $status = $input['status'];
         $statusP = $input['statusP'];
+        $date_d = $input['date_d'];
+        $date_f = $input['date_f'];
 
-        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye','nom','abonnement','status','statusP'));
+        return view('layouts.pack.index',compact('listpack','listpack15jours','listpackexpire','listpacknonpaye','nom','abonnement','status','statusP','date_d','date_f'));
 
     }
     public function reste15j()
