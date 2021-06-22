@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pack;
 use App\Models\Panel;
+use App\Exports\panelExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PanelController extends Controller
 {
@@ -138,5 +140,11 @@ class PanelController extends Controller
         $decharges['data'] = $panel;
 
         return json_encode($decharges);
+    }
+
+
+    public function panelexport()
+    {
+        return Excel::download(new panelExport, 'panel.xlsx');
     }
 }

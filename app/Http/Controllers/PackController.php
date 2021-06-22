@@ -425,12 +425,12 @@ class PackController extends Controller
         return Excel::download(new ClientExport, 'cliens.xlsx');
     }
 
-    public function abmtexport(Request $request)
-    {
-        $status =   $request->input('status');
-        return Excel::download(new AbmtExport($status), 'abmt.xlsx');
+    // public function abmtexport(Request $request)
+    // {
+    //     $status =   $request->input('status');
+    //     return Excel::download(new AbmtExport($status), 'abmt.xlsx');
 
-    }
+    // }
 
 
 

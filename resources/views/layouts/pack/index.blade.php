@@ -66,8 +66,6 @@ use Carbon\Carbon;
                     </div>
                 </div>
 
-
-
                 <div class="row ">
                     <div class="col-lg-12 ">
                         <div class="row">
@@ -91,17 +89,11 @@ use Carbon\Carbon;
         </div>
     </section>
 
-
-
-
-
-    <div class="card-header row">
-           <div class="col">
-            <i class="fas fa-table me-1"></i>
+    <div class="card-header ">
+           <div class="">
+                <i class="fas fa-table me-1"></i>
                 List des abonnements
             </div>
-
-
         </div>
         <div class="card-body ">
             <div class="table-responsive-sm">

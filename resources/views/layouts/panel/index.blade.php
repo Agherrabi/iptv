@@ -60,7 +60,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col align-self-start"><i class="fas fa-table me-1"></i>List des panel</div>
-                <div class="col align-self-end " style="text-align: right !important;"><a class="btn btn-sm btn-secondary" href="#">Export panel</a></div>
+                <div class="col align-self-end " style="text-align: right !important;"><a class="btn btn-sm btn-secondary" href="{{route('panelexport')}}">Export panel</a></div>
             </div>
         </div>
         <div class="card-body">
